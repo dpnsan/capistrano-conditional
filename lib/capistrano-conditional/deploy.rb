@@ -40,7 +40,13 @@ class ConditionalDeploy
     @log_method = :info # TODO: make this configurable
     @to_run  = []
 
-    @git       = Git.open( find_git_root )
+    if (tree = fetch(:repo_tree)) # handle subtree deployment
+      path_adjust = tree.gsub(/[^\/]+/, '..')
+      real_path = File.realdirpath(path_adjust, '.')
+      @git = Git.open(real_path)
+    else
+      @git = Git.open('.')
+    end
     @current   = get_object current, 'currently deployed'
     @deploying = get_object deploying, 'about to be deployed'
     return if @@run_without_git_diff

@@ -1,5 +1,8 @@
 # changelog
 
+## 0.2.4 -- November 15, 2018
+  * Added support for capistrano :repo_tree option
+
 ## 0.2.3 -- July 10, 2014
   * Added ability to specify default tasks in case git diff can't be found
 
